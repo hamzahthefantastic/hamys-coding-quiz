@@ -1,11 +1,6 @@
-let currentQuestion = 0;
-let score = 0;
-let timer = 60;
-let interval;
-
 const startBtn = document.getElementById("start-btn");
 const quizContainer = document.getElementById("quiz-container");
-const timer = document.getElementById("timer");
+const timerr = document.getElementById("timerr");
 const scoreContainer = document.getElementById("score-container");
 const submitContainer = document.getElementById("submit-container");
 const questions = [
@@ -66,18 +61,72 @@ const questions = [
     }
 ];
 
+let currentQuestionIndex = 0;
+let timeLeft = questions.length * 15; 
+let score = 0;
+
 startBtn.addEventListener("click", startQuiz);
 
-choicesEl.addEventListener("click", function(event) {
-  event.preventDefault();
-  const selected = event.target;
-  const correct = selected.parentNode.querySelector(".correct");
-  if (correct.innerText === selected.innerText) {
-    score++;
-    alert("Correct!");
-  } else {
-    timer -= 10;
-    alert("Incorrect!");
-  }
+function startQuiz() {
+  startBtn.style.display = "none";
+  quizContainer.style.display = "block";
   renderQuestion();
-});
+  startTimer();
+}
+
+function renderQuestion() {
+    quizContainer.innerHTML = "";
+    const currentQuestion = questions[currentQuestionIndex];
+    const questionEl = document.createElement("p");
+    questionEl.textContent = currentQuestion.question;
+    questionEl.classList.add("question");
+    quizContainer.appendChild(questionEl);
+  
+    currentQuestion.choices.forEach(function(choice, i) {
+      const choiceBtn = document.createElement("button");
+      choiceBtn.textContent = choice;
+      choiceBtn.classList.add("choice");
+      choiceBtn.addEventListener("click", function() {
+        if (choice === currentQuestion.answer) {
+          score++;
+          choiceBtn.classList.add("correct");
+        } else {
+          timeLeft -= 15; // subtract 15 seconds for incorrect answer
+          choiceBtn.classList.add("incorrect");
+        }
+        currentQuestionIndex++;
+        if (currentQuestionIndex === questions.length) {
+          endQuiz();
+        } else {
+          renderQuestion();
+        }
+      });
+      quizContainer.appendChild(choiceBtn);
+    });
+  }
+  
+  function startTimer() {
+    setInterval(function() {
+      timer.textContent = timeLeft + " seconds remaining";
+      timeLeft--;
+      if (timeLeft < 0) {
+        endQuiz();
+      }
+    }, 1000);
+  }
+  
+  function endQuiz() {
+    clearInterval();
+    quizContainer.style.display = "none";
+    submitContainer.style.display = "block";
+    scoreContainer.textContent = "Your final score is: " + score;
+  
+    const submitForm = document.getElementById("submit-container");
+    submitForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const initials = document.getElementById("initials").value;
+      localStorage.setItem("initials", initials);
+      localStorage.setItem("score", score);
+      alert("Score saved!");
+    });
+  }
