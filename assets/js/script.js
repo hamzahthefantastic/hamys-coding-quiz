@@ -62,16 +62,16 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
-let timeLeft = questions.length * 15; 
+let timeLeft = questions.length * 15;
 let score = 0;
 
 startBtn.addEventListener("click", startQuiz);
 
 function startQuiz() {
-  startBtn.style.display = "none";
-  quizContainer.style.display = "block";
-  renderQuestion();
-  startTimer();
+    startBtn.style.display = "none";
+    quizContainer.style.display = "block";
+    renderQuestion();
+    startTimer();
 }
 
 function renderQuestion() {
@@ -81,52 +81,52 @@ function renderQuestion() {
     questionEl.textContent = currentQuestion.question;
     questionEl.classList.add("question");
     quizContainer.appendChild(questionEl);
-  
-    currentQuestion.choices.forEach(function(choice, i) {
-      const choiceBtn = document.createElement("button");
-      choiceBtn.textContent = choice;
-      choiceBtn.classList.add("choice");
-      choiceBtn.addEventListener("click", function() {
-        if (choice === currentQuestion.answer) {
-          score++;
-          choiceBtn.classList.add("correct");
-        } else {
-          timeLeft -= 15; // subtract 15 seconds for incorrect answer
-          choiceBtn.classList.add("incorrect");
-        }
-        currentQuestionIndex++;
-        if (currentQuestionIndex === questions.length) {
-          endQuiz();
-        } else {
-          renderQuestion();
-        }
-      });
-      quizContainer.appendChild(choiceBtn);
+
+    currentQuestion.choices.forEach(function (choice, i) {
+        const choiceBtn = document.createElement("button");
+        choiceBtn.textContent = choice;
+        choiceBtn.classList.add("choice");
+        choiceBtn.addEventListener("click", function () {
+            if (choice === currentQuestion.answer) {
+                score++;
+                choiceBtn.classList.add("correct");
+            } else {
+                timeLeft -= 15;
+                choiceBtn.classList.add("incorrect");
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex === questions.length) {
+                endQuiz();
+            } else {
+                renderQuestion();
+            }
+        });
+        quizContainer.appendChild(choiceBtn);
     });
-  }
-  
-  function startTimer() {
-    setInterval(function() {
-      timer.textContent = timeLeft + " seconds remaining";
-      timeLeft--;
-      if (timeLeft < 0) {
-        endQuiz();
-      }
+}
+
+function startTimer() {
+    setInterval(function () {
+        timer.textContent = timeLeft + " seconds remaining";
+        timeLeft--;
+        if (timeLeft < 0) {
+            endQuiz();
+        }
     }, 1000);
-  }
-  
-  function endQuiz() {
+}
+
+function endQuiz() {
     clearInterval();
     quizContainer.style.display = "none";
     submitContainer.style.display = "block";
     scoreContainer.textContent = "Your final score is: " + score;
-  
+
     const submitForm = document.getElementById("submit-container");
-    submitForm.addEventListener("submit", function(event) {
-      event.preventDefault();
-      const initials = document.getElementById("initials").value;
-      localStorage.setItem("initials", initials);
-      localStorage.setItem("score", score);
-      alert("Score saved!");
-    });
-  }
+  submitForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const initials = document.getElementById("initials").value;
+    localStorage.setItem("initials", initials);
+    localStorage.setItem("score", score);
+    alert("Score saved!");
+  });
+}
