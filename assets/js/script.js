@@ -104,29 +104,28 @@ function renderQuestion() {
         quizContainer.appendChild(choiceBtn);
     });
 }
-
 function startTimer() {
-    setInterval(function () {
-        timer.textContent = timeLeft + " seconds remaining";
-        timeLeft--;
-        if (timeLeft < 0) {
-            endQuiz();
-        }
+    setInterval(function() {
+      timer.textContent = timeLeft + " seconds remaining";
+      timeLeft--;
+      if (timeLeft < 0) {
+        endQuiz();
+      }
     }, 1000);
-}
-
-function endQuiz() {
+  }
+  
+  function endQuiz() {
     clearInterval();
     quizContainer.style.display = "none";
     submitContainer.style.display = "block";
     scoreContainer.textContent = "Your final score is: " + score;
-
+  
     const submitForm = document.getElementById("submit-container");
-  submitForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-    const initials = document.getElementById("initials").value;
-    localStorage.setItem("initials", initials);
-    localStorage.setItem("score", score);
-    alert("Score saved!");
-  });
-}
+    submitForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const initials = document.getElementById("initials").value;
+      localStorage.setItem("initials", initials);
+      localStorage.setItem("score", score);
+      alert("Score saved!");
+    });
+  }
