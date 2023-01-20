@@ -1,3 +1,4 @@
+(function(){
 const startBtn = document.getElementById("start-btn");
 const quizContainer = document.getElementById("quiz-container");
 const timerr = document.getElementById("timerr");
@@ -61,11 +62,13 @@ const questions = [
     }
 ];
 
+startBtn.addEventListener("click", startQuiz);
+})();
+
 let currentQuestionIndex = 0;
 let timeLeft = questions.length * 15;
 let score = 0;
 
-startBtn.addEventListener("click", startQuiz);
 
 function startQuiz() {
     startBtn.style.display = "none";
