@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  #quiz-container {
+    display: none;
+    text-align: left;
+  }
+  
+  #timer {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #ff0000; 
+  }
+  
+  #submit-container {
+    margin-top: 20px;
+  }
+  
+  .question {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  
+  .choice {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+  
+  .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
+  }
+  
+  header {
+    background-color: #7c7777; 
+    padding: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #e6e21c;
+    font-size: 3em;
+  }
+  
+  button {
+    background-color: #ae58e7; 
+    color: rgb(255, 255, 255);
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
